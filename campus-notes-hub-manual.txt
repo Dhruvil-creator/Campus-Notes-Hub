@@ -1,0 +1,387 @@
+﻿Campus Notes Hub - User Manual
+
+
+Table of Contents
+1. [Getting Started]
+2. [User Registration and Login]
+3. [Dashboard Overview]
+4. [Browsing Notes]
+5. [Uploading Notes]
+6. [Managing Your Notes]
+7. [Interactive Features]
+8. [AI Chat Assistant]
+9. [Admin Panel]
+10. [Troubleshooting]
+
+
+Getting Started
+
+
+System Requirements
+Before using Campus Notes Hub, ensure you have:
+- A modern web browser (Chrome, Firefox, Safari, or Edge)
+- Internet connection for file uploads/downloads
+- JavaScript enabled in your browser
+
+
+Accessing the Platform
+1. Open your web browser
+2. Navigate to the Campus Notes Hub URL provided by your institution
+3. The homepage will load with the main dashboard interface
+
+
+User Registration and Login
+
+
+Creating a New Account
+1. Click the Login/Register button in the top-right corner of the page
+2. Select the "Register" tab in the modal that appears
+3. Fill in the registration form:
+   - Enter a unique username (minimum 3 characters)
+   - Create a secure password (minimum 3 characters)
+4. Click "Register" to create your account
+5. Success message will appear when registration is complete
+6. Automatic redirect to login tab for immediate access
+
+
+Logging In
+1. Click the Login/Register button if not already open
+2. Select the "Login" tab
+3. Enter your credentials:
+   - Username: Your registered username
+   - Password: Your account password
+4. Click "Login" to access your account
+5. Dashboard loads with personalized content and statistics
+
+
+Logging Out
+1. Click your username in the top-right corner
+2. Select "Logout" from the dropdown menu
+3. Confirmation will redirect you to the main page
+
+
+Dashboard Overview
+
+
+Navigation Tabs
+The main interface consists of five primary sections:
+
+
+ 1. Dashboard (Default)
+- Personal Statistics: View your upload count, total downloads, and active subjects
+- Trending Subjects: See the most popular subjects on the platform
+- Quick Access: Recent activity and platform highlights
+
+
+2. Featured Content
+- Top Rated: Highest-rated notes by user reviews
+- Most Downloaded: Popular resources based on download statistics
+- Popular Subjects: Trending academic topics
+- Featured Authors: Top contributors to the platform
+- Announcements: Important platform updates and notices
+
+
+3. Browse Notes
+- All Notes: Complete catalog of available resources
+- Filter Options: Subject and branch dropdown filters
+- Search Results: Real-time filtering based on your selections
+- Note Details: Title, subject, branch, uploader, and download count
+4. Upload (Requires Login)
+- File Selection: Choose documents to share with the community
+- Metadata Entry: Add title, subject, branch, and description
+- Upload Progress: Real-time upload status and confirmation
+
+
+5. My Notes (Requires Login)  
+- Personal Library: View all your uploaded notes
+- Management Tools: Edit or delete your contributions
+- Upload Statistics: Track downloads and engagement on your content
+
+
+Browsing Notes
+
+
+Using Filters
+1. Navigate to the Browse tab
+2. Subject Filter:
+   - Click the "All Subjects" dropdown
+   - Select a specific subject from the list
+   - Notes will automatically filter to show only that subject
+3. Branch Filter:
+   - Click the "All Branches" dropdown  
+   - Choose your academic department (CSE, IT, ICT, etc.)
+   - Results will update to show branch-specific content
+4. Combined Filters: Use both filters together for precise results
+5. Reset Filters: Click "Reset Filters" to return to all notes
+
+
+Downloading Notes
+1. Locate the note you want to download in the browse section
+2. Click the "Download" button in the note's row
+3. File download will begin automatically
+4. Download counter will increment to track popularity
+
+
+Note Information
+Each note displays:
+- Title: Brief description of the content
+- Subject: Academic subject category  
+- Branch: Department or specialization
+- Uploaded By: Username of the contributor
+- Downloads: Number of times the file has been accessed
+- Like Count: User engagement metric
+- Rating: Average user rating (1-5 stars)
+
+
+Uploading Notes
+
+
+Step-by-Step Upload Process
+1. Login Required: You must be logged in to upload notes
+2. Navigate to Upload tab
+3. Fill in Note Details:
+   - Title: Descriptive name for your note (required)
+   - Subject: Academic subject category (required)
+   - Branch: Your department (CSE, IT, ICT, etc.) (required)
+   - Description: Optional detailed description of the content
+
+
+4. Select File:
+   - Click "Choose File" or drag and drop
+   - Supported formats: PDF, DOC, DOCX, PPT, PPTX
+   - Maximum file size: 5MB per file
+
+
+5. Upload Process:
+   - Click "Upload Note" button
+   - Progress indicator will show upload status
+   - Success message confirms completion
+   - Form automatically clears for next upload
+
+
+Upload Guidelines
+- File Naming: System automatically generates unique filenames
+- Content Quality: Ensure notes are clear and academically relevant
+- Copyright Compliance: Only upload content you have rights to share
+- File Organization: Use descriptive titles and accurate subject categorization
+
+
+Managing Your Notes
+
+
+Accessing Your Notes
+1. Login to your account
+2. Navigate to "My Notes" tab
+3. View your uploads with statistics and management options
+
+
+Note Statistics
+For each of your notes, you can see:
+- Download Count: How many times it's been accessed
+- Upload Date: When you originally shared the file
+- Engagement Metrics: Likes and ratings from other users
+
+
+Deleting Your Notes
+1. In the My Notes section, locate the note you want to remove
+2. Click the "Delete" button next to the note
+3. Confirm deletion in the popup dialog
+4. Note is permanently removed from the platform
+
+
+Note: Deletion cannot be undone, so confirm you want to permanently remove the file.
+
+
+Interactive Features
+
+
+Liking Notes
+1. Browse to any note in the platform
+2. Click the "Like" button (green button with heart icon)
+3. Like count increases to show community appreciation
+4. Helps identify popular content for other users
+
+
+Rating Notes
+1. Locate the rating section next to any note
+2. Enter a rating from 1-5 in the rating input field
+3. Click "Rate" to submit your evaluation
+4. Average rating updates to reflect community feedback
+
+
+Engagement Benefits
+- Quality Indication: Ratings help users identify high-quality resources
+- Community Building: Likes and ratings encourage contribution
+- Content Discovery: Popular content rises to featured sections
+
+
+AI Chat Assistant
+
+
+Accessing the Chatbot
+1. Look for the chat icon in the bottom-right corner of any page
+2. Click the circular AI assistant button to open the chat widget
+3. Chat window opens with a welcome message
+
+
+Using the Chat Assistant
+1. Type your question in the text area at the bottom of the chat window
+2. Ask about:
+   - Study help and academic questions
+   - Platform navigation assistance
+   - Subject-specific inquiries
+   - General educational support
+
+
+3. Click "Send" or press Enter to submit your question
+4. AI response appears in the chat window within seconds
+5. Continue the conversation by asking follow-up questions
+Chat Features
+- Real-time Responses: Instant answers to your questions
+- Study Assistance: Academic help and explanations
+- Platform Support: Navigation and usage guidance
+- Text-based Only: Currently supports text communication only
+
+
+Closing the Chat
+1. Click the "×" button in the chat window header
+2. Chat minimizes back to the floating icon
+3. Conversation history preserved during your session
+
+
+Admin Panel
+
+
+Accessing Admin Features
+1. Admin login required: Special administrator credentials needed
+2. Click "Admin Login" tab in the login modal
+3. Enter admin credentials provided by your institution
+4. Access redirects to administrative dashboard
+
+
+Admin Capabilities
+
+
+ User Management
+1. View All Users: Complete list of registered users
+2. Edit User Details:
+   - Click "Edit" next to any user
+   - Modify username as needed  
+   - Save changes or cancel edits
+3. Delete Users:
+   - Click "Delete" next to problem accounts
+   - Confirm deletion (removes user and all their files)
+
+
+Note Management
+1. Browse All Notes: Administrative view of all platform content
+2. Edit Note Information:
+   - Click "Edit" next to any note
+   - Modify title, subject, branch, or description
+   - Update branch classifications for better organization
+   - Save changes or cancel
+3. Delete Inappropriate Content:
+   - Remove notes that violate platform policies
+   - Permanent deletion with administrator confirmation
+
+
+Content Moderation
+- Quality Control: Review and edit user-submitted content
+- Policy Enforcement: Remove content that doesn't meet standards
+- Platform Maintenance: Keep the system organized and functional
+
+
+Admin Best Practices
+- Regular Monitoring: Check new uploads for appropriateness
+- User Support: Address user questions and issues promptly
+- Content Organization: Maintain proper categorization
+- Community Standards: Enforce platform guidelines fairly
+
+
+Troubleshooting
+
+
+Common Issues and Solutions
+
+
+Login Problems
+Issue: Cannot log in with correct credentials
+Solutions:
+1. Check username and password spelling
+2. Ensure caps lock is off
+3. Clear browser cache and cookies
+4. Contact administrator if account is locked
+
+
+Upload Failures
+Issue: File won't upload successfully
+Solutions:
+1. Check file size: Maximum 5MB per file
+2. Verify file format: Only PDF, DOC, DOCX, PPT, PPTX allowed
+3. Complete required fields: Title, subject, and branch are mandatory
+4. Stable internet: Ensure good connection during upload
+5. Browser refresh: Reload page if upload stalls
+
+
+Performance Issues
+Issue: Slow loading or unresponsive interface
+Solutions:
+1. Refresh the page: Simple reload often resolves issues
+2. Clear browser cache: Remove stored temporary files
+3. Check internet connection: Ensure stable connectivity
+4. Close other browser tabs: Free up system memory
+5. Try different browser: Switch to Chrome, Firefox, or Edge
+
+
+Missing Features
+Issue: Cannot see certain buttons or sections
+Solutions:
+1. Login required: Many features need user authentication
+2. JavaScript enabled: Ensure browser JavaScript is active
+3. Modern browser: Update to latest browser version
+4. Screen resolution: Some features may be hidden on small screens
+
+
+File Download Problems
+Issue: Downloads fail or files are corrupted
+Solutions:
+1. Right-click download link: "Save as" instead of direct click
+2. Check available storage: Ensure sufficient disk space
+3. Disable popup blocker: Allow downloads in browser settings
+4. Contact uploader: Report broken files to original contributor
+
+
+Getting Help
+If you continue experiencing issues:
+1. Contact your system administrator
+2. Report bugs through official channels
+3. Check platform announcements for known issues
+4. Use the AI chat assistant for immediate guidance
+
+
+Platform Updates
+- Regular maintenance: Platform may be temporarily unavailable during updates
+- Feature announcements: Check the Featured > Announcements section
+- Browser compatibility: Keep your browser updated for best experience
+
+
+Best Practices
+
+
+For Students
+1. Use descriptive titles: Make notes easy to find and identify
+2. Accurate categorization: Choose correct subject and branch
+3. Quality content: Share clear, useful academic resources
+4. Engage responsibly: Rate and like content fairly
+5. Regular participation: Check for new notes and announcements
+
+
+For Contributors
+1. Original content: Only upload materials you have permission to share
+2. Clear descriptions: Help others understand what you're sharing
+3. Organized uploads: Maintain consistent naming and categorization
+4. Community support: Respond to questions about your notes
+5. Platform improvement: Provide feedback for system enhancements
+
+
+Campus Notes Hub is designed to facilitate collaborative learning and resource sharing. By following this manual, you'll be able to effectively use all platform features and contribute to your academic community's success.

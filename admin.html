@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html ng-app="adminApp">
+<head>
+  <meta charset="utf-8">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="js/admin.js"></script>
+</head>
+<body ng-controller="AdminCtrl">
+  <div class="logo-area">
+    <img src="images/logo.png" alt="Campus Notes Logo" class="dashboard-logo">
+    <span class="site-title">Campus Notes Hub</span>
+  </div>
+
+  <div class="main-content" ng-if="loggedIn">
+    <button ng-click="logout()" class="logout-btn" style="float:right;">Logout</button>
+    <h2>Admin Dashboard</h2>
+
+    <h3>All Users</h3>
+    <table class="table-notes admin-table">
+      <tr>
+        <th>Username</th>
+        <th>Show Files</th>
+        <th>Edit</th>
+        <th>Delete</th>
+      </tr>
+      <tr ng-repeat="u in users">
+        <td>
+          <span ng-if="!editUser || editUser.id !== u.id">{{u.username}}</span>
+          <input ng-if="editUser && editUser.id === u.id" ng-model="editUserUsername">
+        </td>
+        <td>
+          <button class="show-btn" ng-click="showUserNotes(u)">Show Files</button>
+        </td>
+        <td>
+          <button class="edit-btn" ng-if="!editUser || editUser.id !== u.id" ng-click="startEditUser(u)">Edit</button>
+          <span ng-if="editUser && editUser.id === u.id">
+            <button class="save-btn" ng-click="saveEditUser()">Save</button>
+            <button class="cancel-btn" ng-click="cancelEditUser()">Cancel</button>
+          </span>
+        </td>
+        <td>
+          <button class="delete-btn" ng-click="deleteUser(u.id)">Delete</button>
+        </td>
+      </tr>
+    </table>
+
+    <div ng-if="activeUser" style="margin-top:30px;">
+      <h3>
+        Files uploaded by {{activeUser.username}}
+        <button class="cancel-btn" ng-click="cancelShowUserNotes()" style="margin-left: 30px;">Close</button>
+      </h3>
+      <table class="table-notes admin-table">
+        <tr>
+          <th>Title</th>
+          <th>Subject</th>
+          <th>Description</th>
+          <th>Branch</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+        <tr ng-repeat="n in notes | filter:{uploaded_by:activeUser.username}">
+          <td>
+            <span ng-if="!editNote || editNote.id !== n.id">{{n.title}}</span>
+            <input ng-if="editNote && editNote.id === n.id" ng-model="editNoteData.title">
+          </td>
+          <td>
+            <span ng-if="!editNote || editNote.id !== n.id">{{n.subject}}</span>
+            <input ng-if="editNote && editNote.id === n.id" ng-model="editNoteData.subject">
+          </td>
+          <td>
+            <span ng-if="!editNote || editNote.id !== n.id">{{n.description}}</span>
+            <input ng-if="editNote && editNote.id === n.id" ng-model="editNoteData.description">
+          </td>
+          <td>
+            <span ng-if="!editNote || editNote.id !== n.id">{{n.branch}}</span> <!-- Show branch -->
+            <input ng-if="editNote && editNote.id === n.id" ng-model="editNoteData.branch"> <!-- Edit branch -->
+          </td>
+          <td>
+            <button class="edit-btn" ng-if="!editNote || editNote.id !== n.id" ng-click="startEditNote(n)">Edit</button>
+            <span ng-if="editNote && editNote.id === n.id">
+              <button class="save-btn" ng-click="saveEditNote()">Save</button>
+              <button class="cancel-btn" ng-click="cancelEditNote()">Cancel</button>
+            </span>
+          </td>
+          <td>
+            <button class="delete-btn" ng-click="deleteNote(n.id)">Delete</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</body>
+</html>

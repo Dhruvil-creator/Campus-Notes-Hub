@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html ng-app="notesApp">
+<head>
+  <meta charset="utf-8" />
+  <title>Campus Notes Hub</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="js/app.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body ng-controller="NotesCtrl">
+
+  <div class="logo-area">
+    <img src="images/logo.png" alt="Campus Notes Logo" class="dashboard-logo" />
+    <span class="site-title">Campus Notes Hub</span>
+  </div>
+
+  <div class="dashboard-tabs">
+    <button ng-class="{active: activeTab == 'dashboard'}" ng-click="setTab('dashboard')">Dashboard</button>
+    <button ng-class="{active: activeTab == 'featured'}" ng-click="setTab('featured')">Featured</button>
+    <button ng-class="{active: activeTab == 'browse'}" ng-click="setTab('browse')">Browse</button>
+    <button ng-if="userLoggedIn" ng-class="{active: activeTab == 'upload'}" ng-click="setTab('upload')">Upload</button>
+    <button ng-if="userLoggedIn" ng-class="{active: activeTab == 'myNotes'}" ng-click="setTab('myNotes')">My Notes</button>
+    <div class="tab-actions">
+      <span ng-if="userLoggedIn">
+        Welcome, <b>{{currentUser}}</b>!
+        <button ng-click="userLogout()">Logout</button>
+      </span>
+      <span ng-if="!userLoggedIn">
+        <button ng-click="openAuthModal()">Login / Register</button>
+      </span>
+    </div>
+  </div>
+
+  <!-- Dashboard Tab -->
+  <div class="main-content" ng-show="activeTab=='dashboard'">
+    <h1>Welcome to Campus Notes Hub</h1>
+    <div class="dashboard-stats">
+      <div class="stat">
+        <div class="stat-title">Your Uploads</div>
+        <div class="stat-num">{{metrics.uploads || 0}}</div>
+        <div class="stat-caption">In the last 30 days</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Downloads</div>
+        <div class="stat-num">{{metrics.downloads || 0}}</div>
+        <div class="stat-caption">Total across your notes</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Active Subjects</div>
+        <div class="stat-num">{{metrics.subjects || 0}}</div>
+        <div class="stat-caption">Being studied</div>
+      </div>
+    </div>
+    <h2>Trending Subjects</h2>
+    <div>
+      <span class="trending-subject-chip" ng-repeat="sub in trendingSubjects">{{sub}}</span>
+    </div>
+  </div>
+
+  <!-- Featured Tab -->
+  <div class="main-content" ng-show="activeTab=='featured'">
+    <h2>Featured Notes</h2>
+    <div class="featured-menu-buttons">
+      <button ng-click="loadFeaturedNotes('top_rated')">Top Rated Notes</button>
+      <button ng-click="loadFeaturedNotes('most_downloaded')">Most Downloaded</button>
+      <button ng-click="loadFeaturedNotes('editors_picks')">Editor's Picks</button>
+      <button ng-click="loadFeaturedNotes('recently_added')">Recently Added</button>
+      <button ng-click="loadFeaturedNotes('popular_subjects')">Popular Subjects</button>
+      <button ng-click="loadFeaturedNotes('featured_authors')">Featured Authors</button>
+      <button ng-click="loadFeaturedNotes('announcements')">Announcements</button>
+    </div>
+
+    <div ng-if="featuredCategory!='popular_subjects' && featuredCategory!='featured_authors' && featuredCategory!='announcements' && featuredCategory!='note_collections' && featuredCategory!='top_contributors'">
+      <div class="featured-note-card" ng-repeat="note in featuredNotes">
+        <b>{{note.title}}</b><br />
+        <small>
+          By: {{note.uploaded_by}} &bull; Downloads: {{note.downloads}}<br />
+          Subject: {{note.subject}} &bull; Branch: {{note.branch}}
+        </small>
+        <p>{{note.description}}</p>
+        <a ng-href="uploads/{{note.filename}}" ng-click="incrementDownload(note.id)" target="_blank" class="download-btn">Download</a>
+      </div>
+      <div ng-if="featuredNotes.length == 0">No featured notes available</div>
+    </div>
+
+    <div ng-if="featuredCategory == 'popular_subjects'">
+      <ul>
+        <li ng-repeat="sub in popularSubjects">{{sub.subject}} ({{sub.count}} notes)</li>
+      </ul>
+    </div>
+
+    <div ng-if="featuredCategory == 'featured_authors'">
+      <ul>
+        <li ng-repeat="author in featuredAuthors">{{author.uploaded_by}} ({{author.count}} notes)</li>
+      </ul>
+    </div>
+
+    <div ng-if="featuredCategory == 'announcements'">
+      <ul>
+        <li ng-repeat="announcement in announcements"><b>{{announcement.title}}</b><br />{{announcement.content}}</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Browse Tab -->
+  <div class="main-content" ng-show="activeTab=='browse'">
+  <h2>Browse Notes</h2>
+
+  <div class="filter-controls">
+    <label for="subjectSelect">Filter by Subject:</label>
+    <select id="subjectSelect" ng-model="selectedSubject" ng-options="subj for subj in allSubjects"></select>
+
+    <label for="branchSelect">Filter by Branch:</label>
+    <select id="branchSelect" ng-model="selectedBranch" ng-options="br for br in allBranches"></select>
+
+    <button ng-click="fetchNotes()" class="search-btn">Search</button>
+    <button ng-click="resetFilters()" class="reset-btn">Show All</button>
+  </div>
+
+  <table ng-if="notes.length > 0" class="table-notes">
+    <tr>
+      <th>Title</th>
+      <th>Subject</th>
+      <th>Branch</th>
+      <th>By</th>
+      <th>Downloads</th>
+      <th>Action</th>
+    </tr>
+    <tr ng-repeat="note in notes track by note.id">
+      <td>{{note.title}}</td>
+      <td>{{note.subject}}</td>
+      <td>{{note.branch}}</td>
+      <td>{{note.uploaded_by}}</td>
+      <td>{{note.downloads}}</td>
+      <td>
+        <a ng-href="uploads/{{note.filename}}" ng-click="incrementDownload(note.id)" target="_blank" class="download-btn">Download</a>
+        <button ng-if="userLoggedIn && note.uploaded_by==currentUser" ng-click="deleteNote(note.id)" class="delete-btn">Delete</button>
+        <button ng-click="likeNote(note.id)" class="like-btn">👍 Like</button> <span>{{note.likes}}</span>
+        <input type="number" min="1" max="5" ng-model="note.ratingInput" placeholder="Rate" class="rating-input" />
+        <button ng-click="rateNote(note.id, note.ratingInput)" class="rate-btn">Rate</button> <span>{{note.rating}}</span>
+      </td>
+    </tr>
+  </table>
+  <div ng-if="notes.length == 0">No notes found. Try different search terms.</div>
+  <!-- Chat toggle button -->
+  <button class="ai-chat-btn" ng-click="toggleAIChat()" title="Ask AI Assistant">
+    <img src="images/bot-icon.png" alt="AI bot icon" class="ai-chat-icon-img"/>
+  </button>
+
+  <!-- Chat widget panel -->
+  <div class="ai-chat-widget" ng-show="aiChatOpen">
+
+    <div class="ai-chat-widget-header">
+      Campus Helper Bot
+      <button class="ai-chat-close-btn" ng-click="toggleAIChat()" aria-label="Close chat">×</button>
+    </div>
+
+    <div class="ai-chat-content">
+      <div class="ai-chat-messages" scroll-glue>
+        <div ng-repeat="msg in chatMessages track by $index"
+            class="ai-chat-message"
+            ng-class="{'user': msg.from=='user', 'bot': msg.from=='bot', 'typing': msg.typing}">
+          <div ng-if="msg.from=='bot'">
+            <div class="bot-question" ng-if="msg.question"><b>Q:</b> {{msg.question}}</div>
+            <div ng-bind-html="msg.html"></div>
+          </div>
+          <div ng-if="msg.from!='bot'">{{msg.text}}</div>
+        </div>
+
+      </div>
+
+      <form ng-submit="sendChatMessage()" autocomplete="off" class="ai-chat-input-area">
+        <textarea id="chatMsg" name="chatMsg" ng-model="chatMessage" placeholder="Ask a question..." required></textarea>
+        <button type="submit" class="ai-chat-send-btn">✨ Send</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- Upload Tab -->
+  <div class="main-content" ng-show="activeTab=='upload'">
+    <h2>Upload Notes</h2>
+    <div ng-if="!userLoggedIn" class="error">
+      <p>Please login to upload notes.</p>
+    </div>
+    <form ng-submit="uploadNote()" ng-show="userLoggedIn" name="uploadForm" class="upload-form" enctype="multipart/form-data">
+      <label for="noteTitle">Title *</label>
+      <input id="noteTitle" type="text" ng-model="noteTitle" required autocomplete="off" />
+      <label for="noteSubject">Subject *</label>
+      <input id="noteSubject" type="text" ng-model="noteSubject" required autocomplete="off" />
+      <label for="noteBranch">Branch Name</label>
+      <input type="text" id="noteBranch" ng-model="noteBranch" placeholder="Enter branch name" required />
+      <label for="noteDescription">Description</label>
+      <textarea id="noteDescription" ng-model="noteDescription" autocomplete="off"></textarea>
+      <label for="noteFile">File * (PDF, DOC, DOCX, PPT, PPTX - Max 5MB)</label>
+      <input id="noteFile" type="file" file-model="uploadFile" accept=".pdf,.doc,.docx,.ppt,.pptx" required />
+      <button type="submit" ng-disabled="uploading" class="upload-btn">{{uploading ? "Uploading..." : "Upload Note"}}</button>
+      <div class="error" ng-if="error">{{error}}</div>
+      <div class="success" ng-if="success">{{success}}</div>
+    </form>
+  </div>
+
+  <!-- My Notes Tab -->
+  <div class="main-content" ng-show="activeTab=='myNotes'">
+    <h2>My Notes</h2>
+    <div ng-if="!userLoggedIn" class="error">
+      <p>Please login to view your notes.</p>
+    </div>
+    <div ng-if="userLoggedIn">
+      <button ng-click="getMyNotes()" class="refresh-btn">Refresh My Notes</button>
+      <table class="table-mynotes" ng-if="uploadedNotes.length>0">
+        <tr>
+          <th>Title</th><th>Subject</th><th>Downloads</th><th>Uploaded</th><th>Action</th>
+        </tr>
+        <tr ng-repeat="note in uploadedNotes track by note.id">
+          <td>{{note.title}}</td>
+          <td>{{note.subject}}</td>
+          <td>{{note.downloads}}</td>
+          <td>{{note.uploaded_at | date:'MM/dd/yyyy'}}</td>
+          <td>
+            <a ng-href="uploads/{{note.filename}}" target="_blank" class="download-btn">View</a>
+            <button ng-click="deleteNote(note.id)" class="delete-btn">Delete</button>
+          </td>
+        </tr>
+      </table>
+      <div ng-if="uploadedNotes.length==0">
+        <p>You haven't uploaded any notes yet.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Authentication Modal -->
+  <div ng-show="authModal" class="auth-modal-bg">
+    <div class="auth-modal">
+      <div class="auth-tabs">
+        <button ng-class="{active:authTab=='login'}" ng-click="authTab='login'">User Login</button>
+        <button ng-class="{active:authTab=='register'}" ng-click="authTab='register'">Register</button>
+        <button ng-class="{active:authTab=='admin'}" ng-click="authTab='admin'">Admin Login</button>
+        <span class="close-btn" ng-click="closeAuthModal()">&times;</span>
+      </div>
+      <div ng-show="authTab=='login'" class="auth-pane">
+        <h2>User Login</h2>
+        <form ng-submit="userLogin()">
+          <label for="loginUsername">Username</label>
+          <input id="loginUsername" ng-model="loginUsername" required />
+          <label for="loginPassword">Password</label>
+          <input id="loginPassword" type="password" ng-model="loginPassword" required />
+          <button type="submit" class="submit-btn">Login</button>
+        </form>
+        <div class="error" ng-if="userLoginError">{{userLoginError}}</div>
+      </div>
+      <div ng-show="authTab=='register'" class="auth-pane">
+        <h2>Register</h2>
+        <form ng-submit="userRegister()">
+          <label for="registerUsername">Username</label>
+          <input id="registerUsername" ng-model="registerUsername" required />
+          <label for="registerPassword">Password</label>
+          <input id="registerPassword" type="password" ng-model="registerPassword" required />
+          <button type="submit" class="submit-btn">Register</button>
+        </form>
+        <div class="success" ng-if="registerSuccess">{{registerSuccess}}</div>
+        <div class="error" ng-if="registerError">{{registerError}}</div>
+      </div>
+      <div ng-show="authTab=='admin'" class="auth-pane">
+        <h2>Admin Login</h2>
+        <form ng-submit="adminLogin()">
+          <label for="adminUsername">Admin Username</label>
+          <input id="adminUsername" ng-model="adminUsername" required />
+          <label for="adminPassword">Password</label>
+          <input id="adminPassword" type="password" ng-model="adminPassword" required />
+          <button type="submit" class="submit-btn">Login as Admin</button>
+        </form>
+        <div class="error" ng-if="adminLoginError">{{adminLoginError}}</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
